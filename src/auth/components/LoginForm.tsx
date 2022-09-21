@@ -8,6 +8,11 @@ import {
 } from '@mui/material'
 import { useFormik } from 'formik'
 import { validationSchema } from '../models/LoginForm.model'
+import { useAppDispatch } from '../../store/hooks'
+import {
+  checkingAuthentication,
+  startGoogleSignIn,
+} from '../../store/auth/thunks'
 
 import MailOutline from '@mui/icons-material/MailOutline'
 import LockOutlined from '@mui/icons-material/LockOutlined'
@@ -16,6 +21,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Google from '@mui/icons-material/Google'
 
 const LoginForm = () => {
+  const dispatch = useAppDispatch()
+
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const formik = useFormik({
     initialValues: {
@@ -24,7 +31,7 @@ const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
+      dispatch(checkingAuthentication(values.email, values.password))
     },
   })
 
@@ -91,7 +98,11 @@ const LoginForm = () => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Button variant='contained' fullWidth>
+          <Button
+            onClick={() => dispatch(startGoogleSignIn())}
+            variant='contained'
+            fullWidth
+          >
             <Google sx={{ mr: 1 }} /> Google
           </Button>
         </Grid>
