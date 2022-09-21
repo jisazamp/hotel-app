@@ -1,4 +1,4 @@
-import { Typography, Grid } from '@mui/material'
+import { Grid } from '@mui/material'
 
 interface AuthLayoutProps {
   children?: JSX.Element | JSX.Element[] | string

@@ -1,48 +1,69 @@
 import { useState } from 'react'
 import AuthLayout from '../layout/AuthLayout'
+import { useFormik } from 'formik'
+import * as yup from 'yup'
 import {
-  Box,
   Button,
-  FormControl,
   Grid,
   IconButton,
   InputAdornment,
   TextField,
-  Typography,
 } from '@mui/material'
+
 import MailOutline from '@mui/icons-material/MailOutline'
 import LockOutlined from '@mui/icons-material/LockOutlined'
 import Person from '@mui/icons-material/Person'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import Google from '@mui/icons-material/Google'
+import Header from '../components/Header'
+
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email('Ingrese un correo electrónico válido')
+    .required('El correo electrónico es requerido'),
+  password: yup
+    .string()
+    .min(8, 'La contraseña debe contener un mínimo de 8 caracteres')
+    .required('La contraseña es requerida'),
+})
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2))
+    },
+  })
 
   return (
     <AuthLayout>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        {/* Header */}
-        <Person sx={{ fontSize: '40px' }} />
-        <Typography variant='h5' sx={{ textAlign: 'center' }}>
-          Inicio de sesión
-        </Typography>
-      </Box>
-      <FormControl variant='standard'>
-        <Grid container>
-          {/* Mail input */}
+      <Header
+        text='Inicio de sesión'
+        icon={<Person sx={{ fontSize: '40px' }} />}
+      />
+
+      <Grid container>
+        <form onSubmit={formik.handleSubmit}>
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
+              error={formik.touched.email && Boolean(formik.errors.email)}
               fullWidth
+              helperText={formik.touched.email && formik.errors.email}
+              id='email'
               label='Correo electrónico'
+              name='email'
+              onChange={formik.handleChange}
               placeholder='john@mail.com'
+              type='text'
+              value={formik.values.email}
+              variant='outlined'
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -50,18 +71,22 @@ const LoginPage = () => {
                   </InputAdornment>
                 ),
               }}
-              variant='outlined'
-              type='text'
             />
           </Grid>
-          {/* Mail input end */}
 
-          {/* Password input */}
           <Grid item xs={12} sx={{ mt: 3 }}>
             <TextField
+              error={formik.touched.password && Boolean(formik.errors.password)}
               fullWidth
+              helperText={formik.touched.password && formik.errors.password}
+              id='password'
               label='Contraseña'
+              name='password'
+              onChange={formik.handleChange}
               placeholder='******'
+              type={showPassword === true ? 'text' : 'password'}
+              value={formik.values.password}
+              variant='outlined'
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -80,19 +105,24 @@ const LoginPage = () => {
                   </InputAdornment>
                 ),
               }}
-              variant='outlined'
-              type={showPassword === true ? 'text' : 'password'}
             />
           </Grid>
-          {/* Password input end */}
 
-          <Grid xs={12} sx={{ mt: 2 }}>
-            <Button variant='contained' fullWidth>
-              Login
-            </Button>
+          <Grid spacing={2} container sx={{ mt: 2 }}>
+            <Grid item xs={12} md={6}>
+              <Button type='submit' variant='contained' fullWidth>
+                Login
+              </Button>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Button variant='contained' fullWidth>
+                <Google sx={{ mr: 1 }} /> Google
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </FormControl>
+        </form>
+      </Grid>
     </AuthLayout>
   )
 }
