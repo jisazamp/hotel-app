@@ -1,4 +1,4 @@
-import { Grid, Link } from '@mui/material'
+import { Grid, Link, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import AuthLayout from '../layout/AuthLayout'
 import Login from '@mui/icons-material/Login'
@@ -17,8 +17,9 @@ const LoginPage = () => {
         <LoginForm />
 
         <Grid sx={{ mt: 2 }} container direction='row' justifyContent='end'>
+          <Typography sx={{ mr: 1 }}>¿No tienes cuenta aún?</Typography>
           <Link component={RouterLink} color='inherit' to='/auth/register'>
-            Crear una cuenta
+            Regístrate
           </Link>
         </Grid>
       </Grid>

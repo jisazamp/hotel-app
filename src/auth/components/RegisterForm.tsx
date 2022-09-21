@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  Alert,
   Button,
   Grid,
   IconButton,
@@ -7,14 +8,18 @@ import {
   TextField,
 } from '@mui/material'
 import { useFormik } from 'formik'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { registerSchema } from '../models/RegisterForm.model'
 import PersonOutline from '@mui/icons-material/PersonOutline'
 import MailOutline from '@mui/icons-material/MailOutline'
 import LockOutlined from '@mui/icons-material/LockOutlined'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import { startCreatingUserWithEmailPassword } from '../../store/auth/thunks'
 
 const RegisterForm = () => {
+  const dispatch = useAppDispatch()
+  const { errorMessage } = useAppSelector((state) => state.auth)
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const formik = useFormik({
@@ -28,7 +33,15 @@ const RegisterForm = () => {
     },
     validationSchema: registerSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values))
+      const { email, password, firstName, lastName } = values
+      dispatch(
+        startCreatingUserWithEmailPassword({
+          email,
+          password,
+          firstName,
+          lastName,
+        })
+      )
     },
   })
 
