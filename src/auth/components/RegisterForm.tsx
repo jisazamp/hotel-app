@@ -16,10 +16,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
-  const [errors, setErrors] = useState({
-    email: '',
-    password: '',
-  })
 
   const formik = useFormik({
     initialValues: {
@@ -32,22 +28,7 @@ const RegisterForm = () => {
     },
     validationSchema: registerSchema,
     onSubmit: (values) => {
-      if (values.email !== values.confirmEmail) {
-        const newErrors = {
-          ...errors,
-          email: 'Los correos electrónicos no coinciden',
-        }
-        return setErrors(newErrors)
-      }
-      if (values.password !== values.confirmPassword) {
-        const newErrors = {
-          ...errors,
-          password: 'Las contraseñas no coinciden',
-        }
-        return setErrors(newErrors)
-      }
-
-      setErrors({ email: '', password: '' })
+      alert(JSON.stringify(values))
     },
   })
 
@@ -106,13 +87,9 @@ const RegisterForm = () => {
       {/* Email field start */}
       <Grid item xs={12} sx={{ mt: 2 }}>
         <TextField
-          error={
-            (formik.touched.email && !!formik.errors.email) || !!errors.email
-          }
+          error={formik.touched.email && !!formik.errors.email}
           fullWidth
-          helperText={
-            (formik.touched.email && formik.errors.email) || errors.email
-          }
+          helperText={formik.touched.email && formik.errors.email}
           id='email'
           label='Correo electrónico'
           name='email'
@@ -135,13 +112,9 @@ const RegisterForm = () => {
       {/* ConfirmEmail field start */}
       <Grid item xs={12} sx={{ mt: 2 }}>
         <TextField
-          error={
-            (formik.touched.email && !!formik.errors.email) || !!errors.email
-          }
+          error={formik.touched.confirmEmail && !!formik.errors.confirmEmail}
           fullWidth
-          helperText={
-            (formik.touched.email && formik.errors.email) || errors.email
-          }
+          helperText={formik.touched.confirmEmail && formik.errors.confirmEmail}
           id='confirmEmail'
           label='Confirmar correo electrónico'
           name='confirmEmail'
@@ -164,15 +137,9 @@ const RegisterForm = () => {
       {/* Password field start */}
       <Grid item xs={12} sx={{ mt: 3 }}>
         <TextField
-          error={
-            (formik.touched.password && !!formik.errors.password) ||
-            !!errors.password
-          }
+          error={formik.touched.password && !!formik.errors.password}
           fullWidth
-          helperText={
-            (formik.touched.password && formik.errors.password) ||
-            errors.password
-          }
+          helperText={formik.touched.password && formik.errors.password}
           id='password'
           label='Contraseña'
           name='password'
@@ -203,13 +170,11 @@ const RegisterForm = () => {
       <Grid item xs={12} sx={{ mt: 3 }}>
         <TextField
           error={
-            (formik.touched.password && !!formik.errors.password) ||
-            !!errors.password
+            formik.touched.confirmPassword && !!formik.errors.confirmPassword
           }
           fullWidth
           helperText={
-            (formik.touched.password && formik.errors.password) ||
-            errors.password
+            formik.touched.confirmPassword && formik.errors.confirmPassword
           }
           id='confirmPassword'
           label='Confirmar contraseña'

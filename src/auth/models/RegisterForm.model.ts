@@ -13,8 +13,16 @@ export const registerSchema = yup.object({
     .string()
     .email('Ingrese un correo electrónico válido')
     .required('El correo es requerido'),
+  confirmEmail: yup
+    .string()
+    .oneOf([yup.ref('email'), null], 'Los correos electrónicos no coinciden')
+    .required('Confirma tu correo'),
   password: yup
     .string()
     .min(8, 'La contraseña debe contener un mínimo de 8 caracteres')
     .required('La contraseña es requerida'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden')
+    .required('Confirma tu contraseña'),
 })
