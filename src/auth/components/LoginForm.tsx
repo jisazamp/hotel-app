@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Button,
   Grid,
@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { useFormik } from 'formik'
 import { validationSchema } from '../models/LoginForm.model'
-import { useAppDispatch } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   checkingAuthentication,
   startGoogleSignIn,
@@ -21,6 +21,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Google from '@mui/icons-material/Google'
 
 const LoginForm = () => {
+  const { status } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -35,11 +36,13 @@ const LoginForm = () => {
     },
   })
 
+  const isAuthenticating = useMemo(() => status === 'checking', [status])
+
   return (
     <form style={{ width: '100%' }} onSubmit={formik.handleSubmit}>
       <Grid item xs={12} sx={{ mt: 2 }}>
         <TextField
-          error={formik.touched.email && Boolean(formik.errors.email)}
+          error={formik.touched.email && !!formik.errors.email}
           fullWidth
           helperText={formik.touched.email && formik.errors.email}
           id='email'
@@ -92,16 +95,22 @@ const LoginForm = () => {
 
       <Grid spacing={2} container sx={{ mt: 2 }}>
         <Grid item xs={12} md={6}>
-          <Button type='submit' variant='contained' fullWidth>
+          <Button
+            disabled={isAuthenticating}
+            fullWidth
+            type='submit'
+            variant='contained'
+          >
             Login
           </Button>
         </Grid>
 
         <Grid item xs={12} md={6}>
           <Button
+            disabled={isAuthenticating}
+            fullWidth
             onClick={() => dispatch(startGoogleSignIn())}
             variant='contained'
-            fullWidth
           >
             <Google sx={{ mr: 1 }} /> Google
           </Button>
