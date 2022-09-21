@@ -4,7 +4,6 @@ import AuthRoutes from '../auth/routes/AuthRoutes'
 const AppRouter = () => {
   return (
     <Routes>
-      {/* Login */}
       <Route path='/auth/*' element={<AuthRoutes />} />
     </Routes>
   )
