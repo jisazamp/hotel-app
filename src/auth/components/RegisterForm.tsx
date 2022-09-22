@@ -137,7 +137,7 @@ const RegisterForm = () => {
           name='confirmEmail'
           onChange={formik.handleChange}
           placeholder='johndoe@mail.com'
-          type='confirmEmail'
+          type='email'
           value={formik.values.confirmEmail}
           variant='outlined'
           InputProps={{
