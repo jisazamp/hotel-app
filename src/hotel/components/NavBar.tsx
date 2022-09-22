@@ -43,8 +43,11 @@ const NavBar = ({ drawerWidth, openDrawer }: NavBarProps) => {
           <Typography variant='h6' noWrap component='div'>
             HotelApp
           </Typography>
-          <IconButton onClick={onLogout} color='secondary'>
-            <LogOutOutlined />
+          <IconButton onClick={onLogout} color='inherit'>
+            <LogOutOutlined />{' '}
+            <Typography sx={{ fontSize: '1rem', ml: 1 }}>
+              Cerrar sesión
+            </Typography>
           </IconButton>
         </Grid>
       </Toolbar>

@@ -3,30 +3,51 @@ import { createSlice } from '@reduxjs/toolkit'
 export type Hotel = {
   country: string
   description: string
+  imageUrls: string[]
   locality: string
   logo: string
+  rating: number
+  rooms: Room[]
   title: string
   type: number
-  rating: number
+}
+
+export type Room = {
+  numberOfRooms: number
+  roomsAvailable: number
+  type: 'single-room' | 'two-twin-bedroom' | 'one-queen-bedroom'
 }
 
 interface HotelState {
+  hotels: Hotel[] | null
   isSaving: boolean
-  messageSaved: string | null
-  hotels: [] | null
+  savedMessage: string | null
 }
 
 const initialState: HotelState = {
-  isSaving: false,
-  messageSaved: null,
   hotels: null,
+  isSaving: false,
+  savedMessage: null,
 }
 
 export const hotelSlice = createSlice({
   name: 'hotel',
   initialState,
-  reducers: {},
+  reducers: {
+    addNewEmptyHotel: (state: HotelState, action) => {},
+    deleteHotelById: (state: HotelState, action) => {},
+    setActiveHotel: (state: HotelState, action) => {},
+    setHotels: (state: HotelState, action) => {},
+    setSaving: (state: HotelState) => {},
+    updateHotel: (state: HotelState) => {},
+  },
 })
 
-// Action creators are generated for each case reducer function
-export const {} = hotelSlice.actions
+export const {
+  addNewEmptyHotel,
+  deleteHotelById,
+  setActiveHotel,
+  setHotels,
+  setSaving,
+  updateHotel,
+} = hotelSlice.actions
