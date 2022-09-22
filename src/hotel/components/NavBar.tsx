@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction } from 'react'
+import { AppBar, Toolbar, IconButton, Grid, Typography } from '@mui/material'
+import { useAppDispatch } from './../../store/hooks'
 import MenuOutlined from '@mui/icons-material/MenuOutlined'
 import LogOutOutlined from '@mui/icons-material/LogoutOutlined'
-import { AppBar, Toolbar, IconButton, Grid, Typography } from '@mui/material'
+import { startSignOut } from './../../store/auth/thunks'
 
 interface NavBarProps {
   drawerWidth: number
@@ -9,6 +11,12 @@ interface NavBarProps {
 }
 
 const NavBar = ({ drawerWidth, openDrawer }: NavBarProps) => {
+  const dispatch = useAppDispatch()
+
+  const onLogout = () => {
+    dispatch(startSignOut())
+  }
+
   return (
     <AppBar
       sx={{
@@ -35,7 +43,7 @@ const NavBar = ({ drawerWidth, openDrawer }: NavBarProps) => {
           <Typography variant='h6' noWrap component='div'>
             HotelApp
           </Typography>
-          <IconButton color='error'>
+          <IconButton onClick={onLogout} color='error'>
             <LogOutOutlined />
           </IconButton>
         </Grid>
