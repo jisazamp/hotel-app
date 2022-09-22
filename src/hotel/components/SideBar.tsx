@@ -42,7 +42,10 @@ const SideBar = ({ isOpen, drawerWidth, setIsOpen }: SideBarProps) => {
         onClose={handleSideBarClose}
         sx={{
           display: { xs: 'block' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: drawerWidth,
+          },
         }}
       >
         <Toolbar

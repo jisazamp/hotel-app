@@ -8,7 +8,7 @@ import {
 } from '../../firebase/providers'
 import { RegisterUserProps, SignInProps } from '../../firebase/providers'
 
-export const checkingAuthentication = (email: string, password: string) => {
+export const checkingAuthentication = () => {
   return async (dispatch: AppDispatch) => {
     dispatch(checkingCredentials())
   }

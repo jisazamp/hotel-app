@@ -26,7 +26,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
           backgroundColor: 'white',
           borderRadius: 2,
           padding: 3,
-          width: { md: 450 },
+          width: { md: 500 },
         }}
       >
         {children}

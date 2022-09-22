@@ -43,7 +43,7 @@ const NavBar = ({ drawerWidth, openDrawer }: NavBarProps) => {
           <Typography variant='h6' noWrap component='div'>
             HotelApp
           </Typography>
-          <IconButton onClick={onLogout} color='error'>
+          <IconButton onClick={onLogout} color='secondary'>
             <LogOutOutlined />
           </IconButton>
         </Grid>

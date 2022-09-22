@@ -109,7 +109,7 @@ const LoginForm = () => {
             type='submit'
             variant='contained'
           >
-            Login
+            Iniciar sesión
           </Button>
         </Grid>
 
@@ -120,7 +120,7 @@ const LoginForm = () => {
             onClick={() => dispatch(startGoogleSignIn())}
             variant='contained'
           >
-            <Google sx={{ mr: 1 }} /> Google
+            <Google sx={{ mr: 1 }} /> Iniciar con Google
           </Button>
         </Grid>
       </Grid>
