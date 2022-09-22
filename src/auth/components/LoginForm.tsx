@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import {
+  Alert,
   Button,
   Grid,
   IconButton,
@@ -10,8 +11,8 @@ import { useFormik } from 'formik'
 import { validationSchema } from '../models/LoginForm.model'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
-  checkingAuthentication,
   startGoogleSignIn,
+  startLoginWithEmailAndPassword,
 } from '../../store/auth/thunks'
 
 import MailOutline from '@mui/icons-material/MailOutline'
@@ -21,7 +22,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Google from '@mui/icons-material/Google'
 
 const LoginForm = () => {
-  const { status } = useAppSelector((state) => state.auth)
+  const { status, errorMessage } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -32,7 +33,8 @@ const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      dispatch(checkingAuthentication(values.email, values.password))
+      const { email, password } = values
+      dispatch(startLoginWithEmailAndPassword({ email, password }))
     },
   })
 
@@ -92,6 +94,12 @@ const LoginForm = () => {
           }}
         />
       </Grid>
+
+      {errorMessage && (
+        <Alert sx={{ mt: 2 }} severity='error'>
+          {errorMessage}
+        </Alert>
+      )}
 
       <Grid spacing={2} container sx={{ mt: 2 }}>
         <Grid item xs={12} md={6}>

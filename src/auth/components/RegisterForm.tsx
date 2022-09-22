@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import {
   Alert,
   Button,
@@ -19,8 +19,12 @@ import { startCreatingUserWithEmailPassword } from '../../store/auth/thunks'
 
 const RegisterForm = () => {
   const dispatch = useAppDispatch()
-  const { errorMessage } = useAppSelector((state) => state.auth)
+  const { status, errorMessage } = useAppSelector((state) => state.auth)
   const [showPassword, setShowPassword] = useState<boolean>(false)
+  const isCheckingAuthentication = useMemo(
+    () => status === 'checking',
+    [status]
+  )
 
   const formik = useFormik({
     initialValues: {
@@ -215,9 +219,20 @@ const RegisterForm = () => {
       </Grid>
       {/* ConfirmPassword field end */}
 
+      {errorMessage && (
+        <Alert sx={{ mt: 2, mb: 2 }} severity='error'>
+          {errorMessage}
+        </Alert>
+      )}
+
       <Grid spacing={2} container sx={{ mt: 2 }}>
         <Grid item xs={12}>
-          <Button fullWidth type='submit' variant='contained'>
+          <Button
+            disabled={isCheckingAuthentication}
+            fullWidth
+            type='submit'
+            variant='contained'
+          >
             Confirmar
           </Button>
         </Grid>
