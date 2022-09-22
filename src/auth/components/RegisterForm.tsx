@@ -50,7 +50,11 @@ const RegisterForm = () => {
   })
 
   return (
-    <form style={{ width: '100%' }} onSubmit={formik.handleSubmit}>
+    <form
+      className='animate__animated animate__fadeIn animate__faster'
+      style={{ width: '100%' }}
+      onSubmit={formik.handleSubmit}
+    >
       <Grid item xs={12} sx={{ mt: 2 }}>
         {/* FirstName field start */}
         <TextField

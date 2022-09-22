@@ -13,7 +13,10 @@ const LoginPage = () => {
         icon={<Login sx={{ fontSize: '40px' }} />}
       />
 
-      <Grid container>
+      <Grid
+        className='animate__animated animate__fadeIn animate__faster'
+        container
+      >
         <LoginForm />
 
         <Grid sx={{ mt: 2 }} container direction='row' justifyContent='end'>

@@ -12,7 +12,7 @@ const HotelLayout = ({ children }: HotelLayoutProps) => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false)
 
   return (
-    <Box>
+    <Box className='animate__animated animate__fadeIn animate__faster'>
       {/* Navbar */}
       <NavBar openDrawer={setIsDrawerVisible} drawerWidth={drawerWidth} />
 
