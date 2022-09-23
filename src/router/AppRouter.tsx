@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { CheckingAuth } from './../ui/components/'
 import { useCheckAuth } from './../hooks/useCheckAuth'
+
 import HotelRoutes from './../hotel/routes/HotelRoutes'
 import AuthRoutes from '../auth/routes/AuthRoutes'
 

@@ -1,22 +1,16 @@
+import { Dispatch, SetStateAction } from 'react'
 import {
   Box,
   Divider,
   Drawer,
-  Grid,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Toolbar,
   Typography,
 } from '@mui/material'
-import { Dispatch, SetStateAction } from 'react'
 
-import TurnedInNot from '@mui/icons-material/TurnedInNot'
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import { useAppSelector } from '../../store'
+
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 
 interface SideBarProps {
   isOpen: boolean
@@ -37,9 +31,9 @@ const SideBar = ({ isOpen, drawerWidth, setIsOpen }: SideBarProps) => {
       sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
     >
       <Drawer
-        variant='temporary'
-        open={isOpen}
         onClose={handleSideBarClose}
+        open={isOpen}
+        variant='temporary'
         sx={{
           display: { xs: 'block' },
           '& .MuiDrawer-paper': {
@@ -58,30 +52,13 @@ const SideBar = ({ isOpen, drawerWidth, setIsOpen }: SideBarProps) => {
           <Typography variant='h6' noWrap component='div'>
             {displayName}
           </Typography>
+
           <IconButton onClick={handleSideBarClose}>
             <KeyboardArrowLeftIcon fontSize='large' />
           </IconButton>
         </Toolbar>
 
         <Divider />
-
-        <List>
-          {['Enero', 'Febrero', 'Marzo', 'Abril'].map((text) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <TurnedInNot />
-                </ListItemIcon>
-                <Grid container>
-                  <ListItemText primary={text} />
-                  <ListItemText
-                    secondary={'Duis laboris sunt voluptate aliqua.'}
-                  />
-                </Grid>
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
     </Box>
   )

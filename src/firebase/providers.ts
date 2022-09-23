@@ -1,3 +1,4 @@
+import { FirebaseAuth } from './config'
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -5,12 +6,11 @@ import {
   updateProfile,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { FirebaseAuth } from './config'
 
 export interface RegisterUserProps {
+  email: string
   firstName: string
   lastName: string
-  email: string
   password: string
 }
 
@@ -58,8 +58,10 @@ export const registerUserWithEmailPassword = async ({
       email,
       password
     )
+
     const { uid, photoURL } = resp.user
     const displayName = `${firstName} ${lastName}`
+
     if (FirebaseAuth.currentUser) {
       await updateProfile(FirebaseAuth.currentUser, { displayName })
     }

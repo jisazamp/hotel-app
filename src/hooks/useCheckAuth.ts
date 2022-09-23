@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
-import { useAppSelector, useAppDispatch, logout, login } from '../store'
 import { onAuthStateChanged } from 'firebase/auth'
 import { FirebaseAuth } from '../firebase/config'
+
+import { useAppSelector, useAppDispatch, logout, login } from '../store'
 
 export const useCheckAuth = () => {
   const { status } = useAppSelector((state) => state.auth)

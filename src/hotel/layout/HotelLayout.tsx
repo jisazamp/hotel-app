@@ -1,6 +1,7 @@
-import { Box, Toolbar } from '@mui/material'
-import { NavBar, SideBar } from '../components'
 import { useState } from 'react'
+import { Box, Toolbar } from '@mui/material'
+
+import { NavBar, SideBar } from '../components'
 
 interface HotelLayoutProps {
   children?: JSX.Element | JSX.Element[]
@@ -13,19 +14,16 @@ const HotelLayout = ({ children }: HotelLayoutProps) => {
 
   return (
     <Box className='animate__animated animate__fadeIn animate__faster'>
-      {/* Navbar */}
-      <NavBar openDrawer={setIsDrawerVisible} drawerWidth={drawerWidth} />
+      <NavBar drawerWidth={drawerWidth} openDrawer={setIsDrawerVisible} />
 
-      {/* Sidebar */}
       <SideBar
+        drawerWidth={drawerWidth}
         isOpen={isDrawerVisible}
         setIsOpen={setIsDrawerVisible}
-        drawerWidth={drawerWidth}
       />
 
       <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
-
         {children}
       </Box>
     </Box>

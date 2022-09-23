@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react'
+import { useFormik } from 'formik'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   Alert,
   Button,
@@ -7,15 +9,15 @@ import {
   InputAdornment,
   TextField,
 } from '@mui/material'
-import { useFormik } from 'formik'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+
 import { registerSchema } from '../models/RegisterForm.model'
+import { startCreatingUserWithEmailPassword } from '../../store/auth/thunks'
+
 import PersonOutline from '@mui/icons-material/PersonOutline'
 import MailOutline from '@mui/icons-material/MailOutline'
 import LockOutlined from '@mui/icons-material/LockOutlined'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { startCreatingUserWithEmailPassword } from '../../store/auth/thunks'
 
 const RegisterForm = () => {
   const dispatch = useAppDispatch()
@@ -62,7 +64,7 @@ const RegisterForm = () => {
           fullWidth
           helperText={formik.touched.firstName && formik.errors.firstName}
           id='firstName'
-          label='Nombres'
+          label='Nombre'
           name='firstName'
           onChange={formik.handleChange}
           placeholder='John Emerit'

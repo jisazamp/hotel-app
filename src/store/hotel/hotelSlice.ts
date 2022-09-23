@@ -7,7 +7,7 @@ export type Hotel = {
   locality: string
   logo: string
   rating: number
-  rooms: Room[]
+  rooms: Room[] | null
   title: string
   type: number
 }
@@ -19,13 +19,13 @@ export type Room = {
 }
 
 interface HotelState {
-  hotels: Hotel[] | null
+  hotels: Hotel[]
   isSaving: boolean
   savedMessage: string | null
 }
 
 const initialState: HotelState = {
-  hotels: null,
+  hotels: [],
   isSaving: false,
   savedMessage: null,
 }
@@ -34,7 +34,10 @@ export const hotelSlice = createSlice({
   name: 'hotel',
   initialState,
   reducers: {
-    addNewEmptyHotel: (state: HotelState, action) => {},
+    addNewEmptyHotel: (state: HotelState, action) => {
+      state.hotels.push(action.payload)
+      state.isSaving = false
+    },
     deleteHotelById: (state: HotelState, action) => {},
     setActiveHotel: (state: HotelState, action) => {},
     setHotels: (state: HotelState, action) => {},

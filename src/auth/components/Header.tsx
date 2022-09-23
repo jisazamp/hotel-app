@@ -9,9 +9,9 @@ const Header = ({ text, icon }: HeaderProps) => {
   return (
     <Box
       sx={{
+        alignItems: 'center',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
         justifyContent: 'center',
       }}
     >

@@ -9,7 +9,9 @@ const RegisterPage = () => {
   return (
     <AuthLayout>
       <Header text='Registrarse' icon={<Person2 sx={{ fontSize: '40px' }} />} />
+
       <RegisterForm />
+
       <Grid sx={{ mt: 2 }} container direction='row' justifyContent='end'>
         <Typography sx={{ mr: 1 }}>¿Ya tienes una cuenta?</Typography>
         <Link component={RouterLink} color='inherit' to='/auth/login'>

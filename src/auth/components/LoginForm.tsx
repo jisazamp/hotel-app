@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useFormik } from 'formik'
 import {
   Alert,
   Button,
@@ -7,9 +8,9 @@ import {
   InputAdornment,
   TextField,
 } from '@mui/material'
-import { useFormik } from 'formik'
-import { validationSchema } from '../models/LoginForm.model'
+
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { validationSchema } from '../models/LoginForm.model'
 import {
   startGoogleSignIn,
   startLoginWithEmailAndPassword,
@@ -23,9 +24,10 @@ import Google from '@mui/icons-material/Google'
 
 const LoginForm = () => {
   const { status, errorMessage } = useAppSelector((state) => state.auth)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+
   const dispatch = useAppDispatch()
 
-  const [showPassword, setShowPassword] = useState<boolean>(false)
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -43,6 +45,7 @@ const LoginForm = () => {
   return (
     <form style={{ width: '100%' }} onSubmit={formik.handleSubmit}>
       <Grid item xs={12} sx={{ mt: 2 }}>
+        {/* email field start */}
         <TextField
           error={formik.touched.email && !!formik.errors.email}
           fullWidth
@@ -64,7 +67,9 @@ const LoginForm = () => {
           }}
         />
       </Grid>
+      {/* email field end */}
 
+      {/* password field start */}
       <Grid item xs={12} sx={{ mt: 3 }}>
         <TextField
           error={formik.touched.password && Boolean(formik.errors.password)}
@@ -94,6 +99,7 @@ const LoginForm = () => {
           }}
         />
       </Grid>
+      {/* password field end */}
 
       {errorMessage && (
         <Alert sx={{ mt: 2 }} severity='error'>
