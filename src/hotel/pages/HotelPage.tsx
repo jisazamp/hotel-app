@@ -3,16 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import AddOutlined from '@mui/icons-material/AddOutlined'
 import HotelLayout from './../layout/HotelLayout'
 import { NoHotelsView } from '../views'
-import { useAppDispatch } from '../../store/hooks'
-import { startNewHotel } from '../../store/hotel/thunks'
 
 const HotelPage = () => {
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-
-  const onAddClick = () => {
-    // dispatch(startNewHotel())
-  }
 
   return (
     <HotelLayout>

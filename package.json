@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.6",
     "@reduxjs/toolkit": "^1.8.5",
+    "axios": "^0.27.2",
     "firebase": "^9.10.0",
     "formik": "^2.2.9",
     "material": "link:types/@mui/material",

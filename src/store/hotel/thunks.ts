@@ -2,26 +2,16 @@ import { AppDispatch } from '../store'
 import { collection, doc, setDoc } from 'firebase/firestore/lite'
 import { FirebaseDB } from '../../firebase/config'
 import { addNewEmptyHotel } from './hotelSlice'
+import { Hotel } from './hotelSlice'
 
-export const startNewHotel = () => {
+export const startNewHotel = (payload: Hotel) => {
   return async (dispatch: AppDispatch) => {
-    const newHotel = {
-      id: '',
-      country: '',
-      description: '',
-      imageUrls: [],
-      locality: '',
-      logo: '',
-      rating: 0,
-      rooms: null,
-      title: '',
-      type: 3,
-    }
-
     const newDoc = doc(collection(FirebaseDB, `hotels/hotel/registeredHotels`))
-    await setDoc(newDoc, newHotel)
-
+    const newHotel = payload
+    newHotel.logo = ''
     newHotel.id = newDoc.id
+
+    await setDoc(newDoc, newHotel)
     dispatch(addNewEmptyHotel(newHotel))
   }
 }

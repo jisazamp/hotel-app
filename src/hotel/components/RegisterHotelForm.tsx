@@ -1,21 +1,17 @@
-import styled from '@emotion/styled'
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  Divider,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material'
-import { registerHotelSchema } from '../models/RegisterHotel.model'
 import { useFormik } from 'formik'
+import { Link } from 'react-router-dom'
+import { registerHotelSchema } from '../models/RegisterHotel.model'
+import styled from '@emotion/styled'
+import { Button, Divider } from '@mui/material'
+
+import { useAppDispatch } from '../../store/hooks'
+import { startNewHotel } from '../../store/hotel/thunks'
+import GeneralDetails from './GeneralDetails'
+import { Hotel as HotelType } from '../../store/hotel'
+
 import Header from '../../auth/components/Header'
 import Hotel from '@mui/icons-material/Hotel'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import Info from '@mui/icons-material/InfoOutlined'
-import Bed from '@mui/icons-material/Bed'
+import RoomDetails from './RoomDetails'
 
 const FormContainer = styled.form`
   border-radius: 8px;
@@ -27,108 +23,43 @@ const FormContainer = styled.form`
 `
 
 const RegisterHotelForm = () => {
+  const dispatch = useAppDispatch()
+
   const formik = useFormik({
     initialValues: {
-      title: '',
+      country: '',
       description: '',
+      id: null,
+      imageUrls: null,
+      locality: '',
+      logo: null,
+      rating: 2,
+      rooms: null,
+      title: '',
+      type: '',
     },
     validationSchema: registerHotelSchema,
     onSubmit: (values) => {
-      console.log('hola')
+      const newHotel: HotelType = formik.values
+      dispatch(startNewHotel(newHotel))
     },
   })
 
   return (
     <FormContainer onSubmit={formik.handleSubmit}>
+      <Link style={{ textDecoration: 'none', marginBottom: '1rem' }} to='/'>
+        <Button>Volver al inicio</Button>
+      </Link>
       <Header
         text='Registro de nuevo hotel'
         icon={<Hotel sx={{ fontSize: '60px' }} />}
       />
       <Divider sx={{ mt: 2, mb: 3 }} />
 
-      {/* General details start */}
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
-        >
-          <Typography
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Info sx={{ mr: 2 }} />
-            Detalles generales
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Grid item xs={12} sx={{ mt: 2 }}>
-            <TextField
-              error={formik.touched.title && !!formik.errors.title}
-              fullWidth
-              helperText={formik.touched.title && formik.errors.title}
-              id='title'
-              label='Nombre*'
-              name='title'
-              onChange={formik.handleChange}
-              placeholder='Mística Hostel'
-              type='text'
-              value={formik.values.title}
-              variant='outlined'
-            />
-          </Grid>
-
-          <Grid item xs={12} sx={{ mt: 2 }}>
-            <TextField
-              error={formik.touched.description && !!formik.errors.description}
-              fullWidth
-              helperText={
-                formik.touched.description && formik.errors.description
-              }
-              multiline
-              rows={2}
-              id='description'
-              label='Descripción (opcional)'
-              name='description'
-              onChange={formik.handleChange}
-              placeholder='Mística Hostel'
-              type='text'
-              value={formik.values.description}
-              variant='outlined'
-            />
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
-      {/* General Details End */}
+      <GeneralDetails formik={formik} />
 
       {/* Rooms info start */}
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
-        >
-          <Typography
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Bed sx={{ mr: 2 }} />
-            Habitaciones
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+      <RoomDetails />
       {/* Rooms info end */}
 
       <Button sx={{ mt: 4 }} type='submit' variant='contained' fullWidth>

@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export type Hotel = {
+  id: string | null
   country: string
   description: string
-  imageUrls: string[]
+  imageUrls: string[] | null
   locality: string
-  logo: string
+  logo: string | null
   rating: number
   rooms: Room[] | null
   title: string
-  type: number
+  type: number | string
 }
 
 export type Room = {
