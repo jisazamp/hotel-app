@@ -1,14 +1,20 @@
+import { useState } from 'react'
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Button,
   Typography,
 } from '@mui/material'
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Bed from '@mui/icons-material/Bed'
+import { Room } from '../../store/hotel'
+import RoomDetailsForm from './RoomDetailsForm'
 
-const RoomDetails = () => {
+const RoomDetails = ({ formik }: any) => {
+  const [isFormVisible, setIsFormVisible] = useState(false)
+
   return (
     <Accordion>
       <AccordionSummary
@@ -28,10 +34,10 @@ const RoomDetails = () => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
-        </Typography>
+        <RoomDetailsForm />
+        <Button fullWidth onClick={() => setIsFormVisible(true)} variant='text'>
+          Añadir nueva habitación
+        </Button>
       </AccordionDetails>
     </Accordion>
   )

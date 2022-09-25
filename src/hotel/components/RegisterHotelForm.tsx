@@ -33,15 +33,17 @@ const RegisterHotelForm = () => {
       imageUrls: null,
       locality: '',
       logo: null,
-      rating: 2,
-      rooms: null,
+      rating: 0,
+      room: {},
+      rooms: [],
       title: '',
       type: '',
     },
     validationSchema: registerHotelSchema,
     onSubmit: (values) => {
-      const newHotel: HotelType = formik.values
-      dispatch(startNewHotel(newHotel))
+      // const newHotel: HotelType = formik.values
+      // dispatch(startNewHotel(newHotel))
+      console.log(values)
     },
   })
 
@@ -59,11 +61,11 @@ const RegisterHotelForm = () => {
       <GeneralDetails formik={formik} />
 
       {/* Rooms info start */}
-      <RoomDetails />
+      <RoomDetails formik={formik} />
       {/* Rooms info end */}
 
       <Button sx={{ mt: 4 }} type='submit' variant='contained' fullWidth>
-        Añadir habitación
+        Registrar habitación
       </Button>
     </FormContainer>
   )
