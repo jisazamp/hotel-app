@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import { validateRoomForm } from '../utils/validateRoomForm'
+import { roomInitialValue } from '../constants/roomInitialValue'
 import {
   Alert,
   Button,
@@ -12,6 +13,13 @@ import {
   Typography,
 } from '@mui/material'
 
+interface RoomDetailsFormProps {
+  editing: boolean
+  formik: any
+  setEditing: Dispatch<SetStateAction<boolean>>
+  setIsVisible: Dispatch<SetStateAction<boolean>>
+}
+
 const accomodations = [
   { prop: 'singleRoom', label: 'Sencilla' },
   { prop: 'doubleRoom', label: 'Doble' },
@@ -23,7 +31,7 @@ const RoomDetailsForm = ({
   setIsVisible,
   editing,
   setEditing,
-}: any) => {
+}: RoomDetailsFormProps) => {
   const [errors, setErrors] = useState({
     title: '',
     accomodations: '',
@@ -46,44 +54,22 @@ const RoomDetailsForm = ({
         room.id === formik.values.room.id ? formik.values.room : room
       )
       formik.setFieldValue('rooms', newRooms)
-      formik.setFieldValue('room', {
-        title: '',
-        singleRoom: false,
-        doubleRoom: false,
-        queenRoom: false,
-        singleRoomTotal: 0,
-        doubleRoomTotal: 0,
-        queenRoomTotal: 0,
-        singleRoomAvailable: 0,
-        doubleRoomAvailable: 0,
-        queenRoomAvailable: 0,
-      })
+      formik.setFieldValue('room', roomInitialValue)
       setIsVisible(false)
       setEditing(false)
       return
     }
 
-    formik.values.room.id = Date.now()
+    formik.values.room.id = Date.now() + Math.random()
     formik.setFieldValue('rooms', [...formik.values.rooms, formik.values.room])
 
-    formik.setFieldValue('room', {
-      title: '',
-      singleRoom: false,
-      doubleRoom: false,
-      queenRoom: false,
-      singleRoomTotal: 0,
-      doubleRoomTotal: 0,
-      queenRoomTotal: 0,
-      singleRoomAvailable: 0,
-      doubleRoomAvailable: 0,
-      queenRoomAvailable: 0,
-    })
+    formik.setFieldValue('room', roomInitialValue)
     setIsVisible(false)
     setEditing(false)
   }
 
   return (
-    <div>
+    <>
       <Grid container>
         {/* Room name field start */}
         <Grid item xs={12}>
@@ -220,10 +206,26 @@ const RoomDetailsForm = ({
         <Alert severity='error'>{errors.numberOfRooms}</Alert>
       )}
 
-      <Button onClick={handleRoomAdd} fullWidth variant='text' sx={{ mt: 2 }}>
-        Registrar habitación
+      <Button
+        onClick={handleRoomAdd}
+        fullWidth
+        variant='outlined'
+        sx={{ mt: 2 }}
+      >
+        {editing ? 'Editar habitación' : 'Registrar habitación'}
       </Button>
-    </div>
+      <Button
+        onClick={() => {
+          setIsVisible(false)
+          setEditing(false)
+        }}
+        variant='outlined'
+        fullWidth
+        sx={{ mt: 1 }}
+      >
+        Cancelar
+      </Button>
+    </>
   )
 }
 

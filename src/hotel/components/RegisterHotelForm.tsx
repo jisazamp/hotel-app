@@ -1,17 +1,20 @@
 import { useFormik } from 'formik'
 import { Link } from 'react-router-dom'
-import { registerHotelSchema } from '../models/RegisterHotel.model'
-import styled from '@emotion/styled'
 import { Button, Divider } from '@mui/material'
+import styled from '@emotion/styled'
+
+import Header from '../../auth/components/Header'
+import GeneralDetails from './GeneralDetails'
+import RoomDetails from './RoomDetails'
 
 import { useAppDispatch } from '../../store/hooks'
 import { startNewHotel } from '../../store/hotel/thunks'
-import GeneralDetails from './GeneralDetails'
-import { Hotel as HotelType } from '../../store/hotel'
+import { registerHotelSchema } from '../models/RegisterHotel.model'
+import { initialValues } from '../models/RegisterHotelForm.model'
 
-import Header from '../../auth/components/Header'
 import Hotel from '@mui/icons-material/Hotel'
-import RoomDetails from './RoomDetails'
+import ArrowLeftOutlined from '@mui/icons-material/ArrowLeftOutlined'
+import { submitHotelForm } from '../utils/submitHotelForm'
 
 const FormContainer = styled.form`
   border-radius: 8px;
@@ -25,63 +28,11 @@ const FormContainer = styled.form`
 const RegisterHotelForm = () => {
   const dispatch = useAppDispatch()
 
-  const formik = useFormik({
-    initialValues: {
-      country: '',
-      description: '',
-      id: null,
-      imageUrls: null,
-      locality: '',
-      logo: null,
-      rating: 0,
-      room: {
-        title: '',
-        singleRoom: false,
-        doubleRoom: false,
-        queenRoom: false,
-        singleRoomTotal: 0,
-        doubleRoomTotal: 0,
-        queenRoomTotal: 0,
-        singleRoomAvailable: 0,
-        doubleRoomAvailable: 0,
-        queenRoomAvailable: 0,
-      },
-      rooms: [],
-      title: '',
-      type: '',
-    },
+  const formik: any = useFormik({
+    initialValues,
     validationSchema: registerHotelSchema,
     onSubmit: (values) => {
-      const {
-        id,
-        country,
-        description,
-        imageUrls,
-        locality,
-        logo,
-        rating,
-        rooms,
-        title,
-        type,
-      } = formik.values
-
-      if (!values.room.singleRoom) values.room.singleRoomTotal = 0
-      if (!values.room.doubleRoom) values.room.doubleRoomTotal = 0
-      if (!values.room.queenRoom) values.room.queenRoomTotal = 0
-
-      const newHotel: HotelType = {
-        id,
-        country,
-        description,
-        imageUrls,
-        locality,
-        logo,
-        rating,
-        rooms,
-        title,
-        type,
-      }
-
+      const newHotel = submitHotelForm({ formik, values })
       dispatch(startNewHotel(newHotel))
     },
   })
@@ -89,7 +40,9 @@ const RegisterHotelForm = () => {
   return (
     <FormContainer onSubmit={formik.handleSubmit}>
       <Link style={{ textDecoration: 'none', marginBottom: '1rem' }} to='/'>
-        <Button>Volver al inicio</Button>
+        <Button sx={{ mb: 2 }} variant='outlined'>
+          <ArrowLeftOutlined /> Ir al inicio
+        </Button>
       </Link>
       <Header
         text='Registro de nuevo hotel'

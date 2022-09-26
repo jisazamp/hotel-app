@@ -3,6 +3,7 @@ import {
   Box,
   Divider,
   Drawer,
+  Grid,
   IconButton,
   Toolbar,
   Typography,
@@ -59,6 +60,23 @@ const SideBar = ({ isOpen, drawerWidth, setIsOpen }: SideBarProps) => {
         </Toolbar>
 
         <Divider />
+
+        <Grid
+          container
+          sx={{
+            flexDirection: 'column',
+            p: 2,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Grid item xs={12}>
+            <Typography>
+              Acá podría ir más contenido... El propósito de este SideBar es el
+              de asegurarme que la sesión de usuario se está guardando
+            </Typography>
+          </Grid>
+        </Grid>
       </Drawer>
     </Box>
   )

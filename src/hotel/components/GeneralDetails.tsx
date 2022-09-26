@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useFetchCountries } from '../../hooks/useFetchCountries'
 import {
   Accordion,
   AccordionDetails,
@@ -15,7 +16,6 @@ import {
   Typography,
 } from '@mui/material'
 
-import { useFetchCountries } from '../../hooks/useFetchCountries'
 import DefaultLogo from '../../assets/logo-placeholder.png'
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -23,10 +23,20 @@ import Info from '@mui/icons-material/InfoOutlined'
 import Upload from '@mui/icons-material/Upload'
 
 const GeneralDetails = ({ formik }: any) => {
+  const [expanded, setExpanded] = useState<boolean>(false)
   const [preview, setPreview] = useState<string>('')
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
   const { countriesList } = useFetchCountries()
+
+  useEffect(() => {
+    if (!formik.errors) return
+
+    const flag =
+      Object.keys(formik.errors).length > 0 ||
+      Object.keys(formik.touched).length > 0
+    if (flag) setExpanded(true)
+  }, [formik.errors, formik.touched])
 
   useEffect(() => {
     if (!selectedFile) return setPreview('')
@@ -38,7 +48,8 @@ const GeneralDetails = ({ formik }: any) => {
   }, [selectedFile])
 
   return (
-    <Accordion>
+    <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
+      {/* Summary start */}
       <AccordionSummary
         aria-controls='panel1a-content'
         expandIcon={<ExpandMoreIcon />}
@@ -51,10 +62,13 @@ const GeneralDetails = ({ formik }: any) => {
             justifyContent: 'center',
           }}
         >
-          <Info sx={{ mr: 2, color: '#7209b7' }} />
+          <Info sx={{ mr: 2 }} />
           Detalles generales
         </Typography>
       </AccordionSummary>
+      {/* Summary end */}
+
+      {/* Details start */}
       <AccordionDetails>
         <Typography>
           Ingresa aquí los detalles generales sobre el hotel que deseas
@@ -92,7 +106,7 @@ const GeneralDetails = ({ formik }: any) => {
             />
           </Button>
           {formik.errors.logo && formik.touched.logo && (
-            <FormHelperText sx={{ color: 'red', textAlign: 'center' }}>
+            <FormHelperText sx={{ color: 'error.main', textAlign: 'center' }}>
               {formik.errors.logo}
             </FormHelperText>
           )}
@@ -129,7 +143,7 @@ const GeneralDetails = ({ formik }: any) => {
             label='Descripción (opcional)'
             name='description'
             onChange={formik.handleChange}
-            placeholder='Crystal water, white sand private beaches, wildlife surrounding you, watersports, tours & activities, delicious food and cocktails and the best beach'
+            placeholder='Aguas cristalinas, playas privadas de arena blanca, fauna y flora que le rodean, deportes acuáticos, excursiones y actividades, deliciosa comida y cócteles y la mejor playa'
             type='text'
             value={formik.values.description}
             variant='outlined'
@@ -157,7 +171,7 @@ const GeneralDetails = ({ formik }: any) => {
             ))}
           </Select>
           {formik.errors.country && formik.touched.country && (
-            <FormHelperText sx={{ color: 'red', pl: 2 }}>
+            <FormHelperText sx={{ color: 'error.main', pl: 2 }}>
               {formik.errors.country}
             </FormHelperText>
           )}
@@ -188,7 +202,7 @@ const GeneralDetails = ({ formik }: any) => {
           <Select
             fullWidth
             id='type'
-            labelId='demo-simple-select-label'
+            labelId='category-label'
             label='Categoría*'
             error={formik.errors.type && formik.touched.type}
             name='type'
@@ -213,13 +227,14 @@ const GeneralDetails = ({ formik }: any) => {
             size='large'
             sx={{ width: '100%' }}
             value={formik.values.rating}
-            onChange={(event: any) =>
-              formik.setFieldValue('rating', +event.currentTarget.value)
+            onChange={(event, value): void =>
+              formik.setFieldValue('rating', value)
             }
           />
         </Grid>
         {/* Rating field end */}
       </AccordionDetails>
+      {/* Details end */}
     </Accordion>
   )
 }

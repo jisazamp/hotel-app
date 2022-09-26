@@ -1,7 +1,15 @@
 import { Dispatch, SetStateAction } from 'react'
-import { AppBar, Toolbar, IconButton, Grid, Typography } from '@mui/material'
+import { Link as RouterLink } from 'react-router-dom'
 import { useAppDispatch } from './../../store/hooks'
 import { startSignOut } from './../../store/auth/thunks'
+import {
+  AppBar,
+  Grid,
+  IconButton,
+  Link,
+  Toolbar,
+  Typography,
+} from '@mui/material'
 
 import MenuOutlined from '@mui/icons-material/MenuOutlined'
 import LogOutOutlined from '@mui/icons-material/LogoutOutlined'
@@ -30,7 +38,6 @@ const NavBar = ({ drawerWidth, openDrawer }: NavBarProps) => {
           color='inherit'
           edge='start'
           onClick={() => openDrawer(true)}
-          sx={{ mr: 2 }}
         >
           <MenuOutlined />
         </IconButton>
@@ -41,9 +48,11 @@ const NavBar = ({ drawerWidth, openDrawer }: NavBarProps) => {
           direction='row'
           justifyContent='space-between'
         >
-          <Typography variant='h6' noWrap component='div'>
-            HotelApp
-          </Typography>
+          <Link component={RouterLink} to='/'>
+            <IconButton sx={{ color: 'white', fontSize: '1.3rem' }}>
+              HotelApp
+            </IconButton>
+          </Link>
 
           <IconButton onClick={onLogout} color='inherit'>
             <LogOutOutlined />

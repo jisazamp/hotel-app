@@ -9,12 +9,13 @@ import {
   TextField,
 } from '@mui/material'
 
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { validationSchema } from '../models/LoginForm.model'
 import {
   startGoogleSignIn,
   startLoginWithEmailAndPassword,
 } from '../../store/auth/thunks'
+
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { validationSchema } from '../models/LoginForm.model'
 
 import MailOutline from '@mui/icons-material/MailOutline'
 import LockOutlined from '@mui/icons-material/LockOutlined'
