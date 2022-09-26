@@ -19,6 +19,12 @@ const RoomDetails = ({ formik }: any) => {
   const [editing, setEditing] = useState<boolean>(false)
 
   const onRoomDelete = (title: string) => {
+    const deleteConfirmation = confirm(
+      `¿Está seguro que desea eliminar la habitación ${title}?`
+    )
+
+    if (!deleteConfirmation) return
+
     const newRooms = formik.values.rooms.filter(
       (room: any) => room.title !== title
     )
