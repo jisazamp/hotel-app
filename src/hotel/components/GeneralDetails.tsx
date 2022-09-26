@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import {
   Accordion,
   AccordionDetails,
@@ -16,6 +15,7 @@ import {
   Typography,
 } from '@mui/material'
 
+import { useFetchCountries } from '../../hooks/useFetchCountries'
 import DefaultLogo from '../../assets/logo-placeholder.png'
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -23,23 +23,10 @@ import Info from '@mui/icons-material/InfoOutlined'
 import Upload from '@mui/icons-material/Upload'
 
 const GeneralDetails = ({ formik }: any) => {
-  const [countriesList, setCountriesList] = useState<string[] | null>(null)
-  const [preview, setPreview] = useState('')
+  const [preview, setPreview] = useState<string>('')
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
-  const fetchCountries = async () => {
-    const res = await axios.get('https://restcountries.com/v3.1/region/ame')
-    const resultingCountriesList = res.data.map((country: any) => {
-      const countryName = country.name.common
-      const countryFlag = country.flag
-      return { name: countryName, flag: countryFlag }
-    })
-    setCountriesList(resultingCountriesList)
-  }
-
-  useEffect(() => {
-    fetchCountries()
-  }, [])
+  const { countriesList } = useFetchCountries()
 
   useEffect(() => {
     if (!selectedFile) return setPreview('')

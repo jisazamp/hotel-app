@@ -57,8 +57,8 @@ const RegisterForm = () => {
       style={{ width: '100%' }}
       onSubmit={formik.handleSubmit}
     >
+      {/* FirstName field start */}
       <Grid item xs={12} sx={{ mt: 2 }}>
-        {/* FirstName field start */}
         <TextField
           error={formik.touched.firstName && !!formik.errors.firstName}
           fullWidth
