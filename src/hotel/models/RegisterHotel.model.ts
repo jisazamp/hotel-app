@@ -1,4 +1,3 @@
-import { ThumbUp } from '@mui/icons-material'
 import * as yup from 'yup'
 
 export const registerHotelSchema = yup.object({
