@@ -113,6 +113,26 @@ const GeneralDetails = ({ formik }: any) => {
         </Grid>
         {/* Logo field end */}
 
+        {/* Rating field start */}
+        <InputLabel sx={{ mt: 4, textAlign: 'center' }}>
+          Calificación
+        </InputLabel>
+        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Rating
+            defaultValue={2.5}
+            id='rating'
+            name='rating'
+            precision={0.5}
+            size='large'
+            sx={{ justifyContent: 'center' }}
+            value={formik.values.rating}
+            onChange={(event, value): void =>
+              formik.setFieldValue('rating', value)
+            }
+          />
+        </Grid>
+        {/* Rating field end */}
+
         {/* title field start */}
         <Grid item xs={12} sx={{ mt: 2 }}>
           <TextField
@@ -215,24 +235,6 @@ const GeneralDetails = ({ formik }: any) => {
           </Select>
         </Grid>
         {/* Category field end */}
-
-        {/* Rating field start */}
-        <Grid item xs={12} sx={{ mt: 2 }}>
-          <InputLabel>Calificación</InputLabel>
-          <Rating
-            defaultValue={2.5}
-            id='rating'
-            name='rating'
-            precision={0.5}
-            size='large'
-            sx={{ width: '100%' }}
-            value={formik.values.rating}
-            onChange={(event, value): void =>
-              formik.setFieldValue('rating', value)
-            }
-          />
-        </Grid>
-        {/* Rating field end */}
       </AccordionDetails>
       {/* Details end */}
     </Accordion>
