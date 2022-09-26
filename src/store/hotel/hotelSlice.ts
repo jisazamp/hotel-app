@@ -20,12 +20,14 @@ export type Room = {
 }
 
 interface HotelState {
+  canRedirect: boolean
   hotels: Hotel[]
   isSaving: boolean
   savedMessage: string | null
 }
 
 const initialState: HotelState = {
+  canRedirect: false,
   hotels: [],
   isSaving: false,
   savedMessage: null,
@@ -35,6 +37,12 @@ export const hotelSlice = createSlice({
   name: 'hotel',
   initialState,
   reducers: {
+    creatingNewHotel: (state: HotelState, action) => {
+      state.isSaving = action.payload
+    },
+    redirectUser: (state: HotelState, action) => {
+      state.canRedirect = action.payload
+    },
     addNewEmptyHotel: (state: HotelState, action) => {
       state.hotels.push(action.payload)
       state.isSaving = false
@@ -49,6 +57,8 @@ export const hotelSlice = createSlice({
 
 export const {
   addNewEmptyHotel,
+  redirectUser,
+  creatingNewHotel,
   deleteHotelById,
   setActiveHotel,
   setHotels,

@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { Button, Divider } from '@mui/material'
 import styled from '@emotion/styled'
@@ -7,7 +9,7 @@ import Header from '../../auth/components/Header'
 import GeneralDetails from './GeneralDetails'
 import RoomDetails from './RoomDetails'
 
-import { useAppDispatch } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { startNewHotel } from '../../store/hotel/thunks'
 import { registerHotelSchema } from '../models/RegisterHotel.model'
 import { initialValues } from '../models/RegisterHotelForm.model'
@@ -15,6 +17,7 @@ import { initialValues } from '../models/RegisterHotelForm.model'
 import Hotel from '@mui/icons-material/Hotel'
 import ArrowLeftOutlined from '@mui/icons-material/ArrowLeftOutlined'
 import { submitHotelForm } from '../utils/submitHotelForm'
+import { redirectUser } from '../../store/hotel'
 
 const FormContainer = styled.form`
   border-radius: 8px;
@@ -27,6 +30,8 @@ const FormContainer = styled.form`
 
 const RegisterHotelForm = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const { isSaving, canRedirect } = useAppSelector((state) => state.hotel)
 
   const formik: any = useFormik({
     initialValues,
@@ -36,6 +41,15 @@ const RegisterHotelForm = () => {
       dispatch(startNewHotel(newHotel))
     },
   })
+
+  useEffect(() => {
+    if (!canRedirect) return
+
+    setTimeout(() => {
+      navigate('/')
+      dispatch(redirectUser(false))
+    }, 1500)
+  }, [canRedirect])
 
   return (
     <FormContainer onSubmit={formik.handleSubmit}>
@@ -54,8 +68,14 @@ const RegisterHotelForm = () => {
 
       <RoomDetails formik={formik} />
 
-      <Button sx={{ mt: 4 }} type='submit' variant='contained' fullWidth>
-        Registrar hotel
+      <Button
+        disabled={isSaving}
+        sx={{ mt: 4 }}
+        type='submit'
+        variant='contained'
+        fullWidth
+      >
+        {isSaving ? 'Guardando...' : 'Registrar hotel'}
       </Button>
     </FormContainer>
   )
