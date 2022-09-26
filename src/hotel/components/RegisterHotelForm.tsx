@@ -34,16 +34,55 @@ const RegisterHotelForm = () => {
       locality: '',
       logo: null,
       rating: 0,
-      room: {},
+      room: {
+        title: '',
+        singleRoom: false,
+        doubleRoom: false,
+        queenRoom: false,
+        singleRoomTotal: 0,
+        doubleRoomTotal: 0,
+        queenRoomTotal: 0,
+        singleRoomAvailable: 0,
+        doubleRoomAvailable: 0,
+        queenRoomAvailable: 0,
+      },
       rooms: [],
       title: '',
       type: '',
     },
     validationSchema: registerHotelSchema,
     onSubmit: (values) => {
-      // const newHotel: HotelType = formik.values
-      // dispatch(startNewHotel(newHotel))
-      console.log(values)
+      const {
+        id,
+        country,
+        description,
+        imageUrls,
+        locality,
+        logo,
+        rating,
+        rooms,
+        title,
+        type,
+      } = formik.values
+
+      if (!values.room.singleRoom) values.room.singleRoomTotal = 0
+      if (!values.room.doubleRoom) values.room.doubleRoomTotal = 0
+      if (!values.room.queenRoom) values.room.queenRoomTotal = 0
+
+      const newHotel: HotelType = {
+        id,
+        country,
+        description,
+        imageUrls,
+        locality,
+        logo,
+        rating,
+        rooms,
+        title,
+        type,
+      }
+
+      dispatch(startNewHotel(newHotel))
     },
   })
 
@@ -60,12 +99,10 @@ const RegisterHotelForm = () => {
 
       <GeneralDetails formik={formik} />
 
-      {/* Rooms info start */}
       <RoomDetails formik={formik} />
-      {/* Rooms info end */}
 
       <Button sx={{ mt: 4 }} type='submit' variant='contained' fullWidth>
-        Registrar habitación
+        Registrar hotel
       </Button>
     </FormContainer>
   )
