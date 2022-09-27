@@ -1,6 +1,6 @@
 import { AppDispatch } from '../store'
 import { FirebaseDB } from '../../firebase/config'
-import { creatingNewHotel, updateHotel } from './hotelSlice'
+import { creatingNewHotel, updateHotel, setIsLoading } from './hotelSlice'
 import { Hotel } from './hotelSlice'
 import {
   collection,
@@ -54,6 +54,7 @@ export const startUpdateHotel = (payload: Hotel) => {
 
 export const startHotelFetch = () => {
   return async (dispatch: AppDispatch) => {
+    dispatch(setIsLoading(true))
     const collectionRef = collection(
       FirebaseDB,
       'hotels/hotel/registeredHotels'
@@ -75,6 +76,7 @@ export const startHotelFetch = () => {
       })
     )
     dispatch(setHotels(fetchedHotels))
+    dispatch(setIsLoading(false))
   }
 }
 

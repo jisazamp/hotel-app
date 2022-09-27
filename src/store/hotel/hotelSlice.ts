@@ -23,14 +23,14 @@ interface HotelState {
   canRedirect: boolean
   hotels: Hotel[]
   isSaving: boolean
-  savedMessage: string | null
+  isLoading: boolean
 }
 
 const initialState: HotelState = {
   canRedirect: false,
   hotels: [],
   isSaving: false,
-  savedMessage: null,
+  isLoading: false,
 }
 
 export const hotelSlice = createSlice({
@@ -54,6 +54,9 @@ export const hotelSlice = createSlice({
     setHotels: (state: HotelState, action) => {
       state.hotels = action.payload
     },
+    setIsLoading: (state: HotelState, action) => {
+      state.isLoading = action.payload
+    },
     updateHotel: (state: HotelState, action) => {
       const idx = state.hotels.findIndex((el) => el.id === action.payload.id)
       state.hotels[idx] = action.payload
@@ -68,4 +71,5 @@ export const {
   deleteHotelById,
   setHotels,
   updateHotel,
+  setIsLoading,
 } = hotelSlice.actions
