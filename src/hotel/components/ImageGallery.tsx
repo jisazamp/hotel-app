@@ -54,7 +54,10 @@ const ImageGallery = () => {
 
   return (
     <ImageList
-      sx={{ width: '100%', height: 500, margin: '1rem auto' }}
+      sx={{
+        width: { xs: '100%', lg: '70%' },
+        margin: '1rem auto',
+      }}
       cols={4}
       rowHeight={164}
     >

@@ -13,7 +13,8 @@ import {
   IconButton,
 } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
-import { Hotel } from '../../store/hotel'
+import { Hotel, startHotelDeleteById } from '../../store/hotel'
+import { useAppDispatch } from '../../store'
 
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import DefaultLogo from '../../assets/logo-placeholder.png'
@@ -23,6 +24,8 @@ interface HotelCardProps {
 }
 
 const HotelCard = ({ hotel }: HotelCardProps) => {
+  const dispatch = useAppDispatch()
+
   return (
     <Grid key={hotel.id} item xs={12} sm={6} md={4} lg={3}>
       <Card
@@ -67,8 +70,8 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
                   display: 'flex',
                   flexDirection: { xs: 'column', lg: 'row' },
                   justifyContent: { xs: 'center', lg: 'space-between' },
-                  pl: 2,
-                  pr: 2,
+                  pl: 1,
+                  pr: 1,
                 }}
               >
                 <Typography sx={{ fontWeight: '700' }}>
@@ -110,10 +113,20 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
             <FavoriteIcon />
           </IconButton>
           <Grid item>
-            <Button variant='text' sx={{ mr: 1 }}>
+            <Button onClick={() => {}} variant='text' sx={{ mr: 1 }}>
               Editar
             </Button>
-            <Button variant='text'>Borrar</Button>
+            <Button
+              onClick={() => {
+                const flag = confirm(
+                  `¿Está seguro que desea eliminar el hotel ${hotel.title}?`
+                )
+                hotel.id && flag && dispatch(startHotelDeleteById(hotel.id))
+              }}
+              variant='text'
+            >
+              Borrar
+            </Button>
           </Grid>
         </CardActions>
       </Card>

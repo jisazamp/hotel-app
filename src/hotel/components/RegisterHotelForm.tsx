@@ -28,13 +28,20 @@ const FormContainer = styled.form`
   padding: 2rem;
 `
 
-const RegisterHotelForm = () => {
+interface RegisterHotelFormProps {
+  title?: string
+  initValues?: any
+}
+
+const RegisterHotelForm = ({ title, initValues }: RegisterHotelFormProps) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { isSaving, canRedirect } = useAppSelector((state) => state.hotel)
 
+  const formikInitialValues = initValues ? initValues : initialValues
+
   const formik: any = useFormik({
-    initialValues,
+    initialValues: formikInitialValues,
     validationSchema: registerHotelSchema,
     onSubmit: (values) => {
       const newHotel = submitHotelForm({ formik, values })
@@ -57,7 +64,7 @@ const RegisterHotelForm = () => {
         </Button>
       </Link>
       <Header
-        text='Registro de nuevo hotel'
+        text={title ? title : 'Registro de nuevo hotel'}
         icon={<Hotel sx={{ fontSize: '60px' }} />}
       />
       <Divider sx={{ mt: 2, mb: 3 }} />
