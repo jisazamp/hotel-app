@@ -1,15 +1,19 @@
 import { IconButton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { NoHotelsView } from '../views'
+import { useAppSelector } from '../../store'
+
 import AddOutlined from '@mui/icons-material/AddOutlined'
 import HotelLayout from './../layout/HotelLayout'
-import { NoHotelsView } from '../views'
+import HotelView from '../views/HotelView'
 
 const HotelPage = () => {
   const navigate = useNavigate()
+  const { hotels } = useAppSelector((state) => state.hotel)
 
   return (
     <HotelLayout>
-      <NoHotelsView />
+      {hotels.length > 0 ? <HotelView /> : <NoHotelsView />}
       <IconButton
         onClick={() => navigate('/hotels/new')}
         size='large'

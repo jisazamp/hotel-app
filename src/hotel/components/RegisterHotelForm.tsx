@@ -45,10 +45,8 @@ const RegisterHotelForm = () => {
   useEffect(() => {
     if (!canRedirect) return
 
-    setTimeout(() => {
-      navigate('/')
-      dispatch(redirectUser(false))
-    }, 1500)
+    navigate('/')
+    dispatch(redirectUser(false))
   }, [canRedirect])
 
   return (
