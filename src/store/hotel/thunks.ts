@@ -1,4 +1,7 @@
 import { AppDispatch } from '../store'
+import { FirebaseDB } from '../../firebase/config'
+import { creatingNewHotel, updateHotel } from './hotelSlice'
+import { Hotel } from './hotelSlice'
 import {
   collection,
   doc,
@@ -6,15 +9,12 @@ import {
   getDocs,
   deleteDoc,
 } from 'firebase/firestore/lite'
-import { FirebaseDB } from '../../firebase/config'
 import {
   addNewEmptyHotel,
   deleteHotelById,
   redirectUser,
   setHotels,
 } from './hotelSlice'
-import { creatingNewHotel } from './hotelSlice'
-import { Hotel } from './hotelSlice'
 
 export const startNewHotel = (payload: Hotel) => {
   return async (dispatch: AppDispatch) => {
@@ -27,6 +27,26 @@ export const startNewHotel = (payload: Hotel) => {
 
     await setDoc(newDoc, newHotel)
     dispatch(addNewEmptyHotel(newHotel))
+    dispatch(creatingNewHotel(false))
+    dispatch(redirectUser(true))
+  }
+}
+
+export const startUpdateHotel = (payload: Hotel) => {
+  return async (dispatch: AppDispatch) => {
+    dispatch(creatingNewHotel(true))
+
+    const newHotel = payload
+    newHotel.logo = ''
+
+    const docRef = doc(
+      FirebaseDB,
+      'hotels/hotel',
+      `registeredHotels/${payload.id}`
+    )
+
+    await setDoc(docRef, newHotel)
+    dispatch(updateHotel(payload))
     dispatch(creatingNewHotel(false))
     dispatch(redirectUser(true))
   }

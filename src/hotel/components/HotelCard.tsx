@@ -15,6 +15,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom'
 import { Hotel, startHotelDeleteById } from '../../store/hotel'
 import { useAppDispatch } from '../../store'
+import { useNavigate } from 'react-router-dom'
 
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import DefaultLogo from '../../assets/logo-placeholder.png'
@@ -25,6 +26,7 @@ interface HotelCardProps {
 
 const HotelCard = ({ hotel }: HotelCardProps) => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   return (
     <Grid key={hotel.id} item xs={12} sm={6} md={4} lg={3}>
@@ -113,7 +115,11 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
             <FavoriteIcon />
           </IconButton>
           <Grid item>
-            <Button onClick={() => {}} variant='text' sx={{ mr: 1 }}>
+            <Button
+              onClick={() => navigate(`/hotels/edit/${hotel.id}`)}
+              variant='text'
+              sx={{ mr: 1 }}
+            >
               Editar
             </Button>
             <Button

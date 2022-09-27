@@ -10,7 +10,7 @@ import GeneralDetails from './GeneralDetails'
 import RoomDetails from './RoomDetails'
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { startNewHotel } from '../../store/hotel/thunks'
+import { startNewHotel, startUpdateHotel } from '../../store/hotel/thunks'
 import { registerHotelSchema } from '../models/RegisterHotel.model'
 import { initialValues } from '../models/RegisterHotelForm.model'
 
@@ -44,6 +44,8 @@ const RegisterHotelForm = ({ title, initValues }: RegisterHotelFormProps) => {
     initialValues: formikInitialValues,
     validationSchema: registerHotelSchema,
     onSubmit: (values) => {
+      if (initValues) return dispatch(startUpdateHotel(values))
+
       const newHotel = submitHotelForm({ formik, values })
       dispatch(startNewHotel(newHotel))
     },
