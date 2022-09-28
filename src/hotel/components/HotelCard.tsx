@@ -79,7 +79,7 @@ const HotelCard = ({ hotel }: HotelCardProps) => {
                 <Typography sx={{ fontWeight: '700' }}>
                   {hotel.locality}
                 </Typography>
-                <Rating readOnly value={hotel.rating} />
+                <Rating readOnly precision={0.5} value={hotel.rating} />
               </Grid>
             </Grid>
             {/* Hotel title, rating and locality end */}
