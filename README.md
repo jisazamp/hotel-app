@@ -16,10 +16,16 @@ o
 yarn install
 ```
 
-o
+Y luego:
 
 ```
-pnpm install
+npm run dev
+```
+
+o 
+
+```
+yarn run dev
 ```
 
 ## Tabla de contenidos
