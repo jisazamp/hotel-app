@@ -45,8 +45,8 @@ yarn run dev
 
 Los usuarios deberían poder:
 
-- Registrarse a través con email y contraseña, o con GMail (se brindan ambas alternativas)
-- Iniciar sesión con email y contraseña, o con GMail
+- Registrarse a través de email y contraseña, o con Gmail (se brindan ambas alternativas)
+- Iniciar sesión con email y contraseña, o con Gmail
 - En este caso, no persistí la sesión de usuario mediante session storage, sino que, aprovechando que estaba implementando con Firebase, usé el Observable de onAuthStateChanged. 
 - CRUD de hoteles con campos como nombre, descripción, país, etc.
 - Cerrar sesión mediante la instrucción del SDK de Firebase.
